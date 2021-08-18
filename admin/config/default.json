@@ -1,7 +1,0 @@
-{
-  "mongoURI": "mongodb://localhost:27017/maseeha",
-  "jwtSecret": "secret",
-  "MAIL_USER": "mr.new0509@gmail.com",
-  "MAIL_PASS": "wjsrlgkrdnjs2",
-  "githubToken": ""
-}
