@@ -1,10 +1,18 @@
 import { combineReducers } from 'redux';
 import alert from './alert';
 import auth from './auth';
-import blogRed from './blogRed';
+import blogReducer from './blogRed';
+import footerContentReducer from './footerContentRed';
+import logoReducer from './logoRed';
+import postCategoryReducer from './postCategoryRed';
+import siteTitleReducer from './siteTitleRed';
 
 export default combineReducers({
   alert,
   auth,
-  blog: blogRed
+  blog: blogReducer,
+  logo: logoReducer,
+  siteTitle: siteTitleReducer,
+  footerContent: footerContentReducer,
+  postCategory: postCategoryReducer
 });

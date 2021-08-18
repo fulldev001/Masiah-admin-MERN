@@ -21,6 +21,10 @@ const MeditationaudioSchema = new mongoose.Schema({
       type: Number,
     }
   ],
+  averageRate: {
+    type: Number,
+    default: 0
+  },
   listen_counts: {
     type: Number,
     default: 0

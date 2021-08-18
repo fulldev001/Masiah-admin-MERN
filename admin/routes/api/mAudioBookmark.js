@@ -1,10 +1,11 @@
 const express = require('express');
+const auth = require('../../middleware/auth');
 const router = express.Router();
 
 const MAudioBookmark = require('../../models/MAudioBookmark');
 
 //  Bookmark a meditaion audio
-router.post("/add", (req, res) => {
+router.post("/add", auth, (req, res) => {
   MAudioBookmark.find({ 
       user: req.body.user, 
       mAudio: req.body.mAudio 

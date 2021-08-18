@@ -44,7 +44,7 @@ const Login = ({ login, isAuthenticated }) => {
             <Form.Group>
               <Form.Control
                 type="text"
-                placeholder="Input"
+                placeholder="admin@123.com"
                 name="email"
                 value={email}
                 onChange={onChange}
@@ -54,7 +54,7 @@ const Login = ({ login, isAuthenticated }) => {
             <Form.Group>
               <Form.Control
                 type="password"
-                placeholder="Input"
+                placeholder="admin123"
                 name="password"
                 value={password}
                 onChange={onChange}

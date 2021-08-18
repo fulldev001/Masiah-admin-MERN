@@ -18,16 +18,13 @@ const PostSchema = new Schema({
     type: String,
     default: ""
   },
-  // categories: [
-  //   {
-  //     category: {
-  //       type: Schema.Types.ObjectId,
-  //       ref: "post_categories"
-  //     }
-  //   }
-  // ],
-  categories: {
-    type: Array
+  ancestors: [{
+    type: Schema.Types.ObjectId,
+    ref: "post_categories"
+  }],
+  parent: {
+    type: Schema.Types.ObjectId,
+    ref: "post_categories"
   },
   author: {
     type: Schema.Types.ObjectId,

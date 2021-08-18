@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../../middleware/auth');
 const Question = require('../../models/Question');
 const Answer = require('../../models/Answer');
 const QALog = require('../../models/QALog');
+const InitialQALog = require('../../models/InitialQALog');
+const DescriptiveQALog = require('../../models/DescriptiveQALog');
 
 router.get('/', async (req, res) => {
   const result = await Question.find().populate('emotionpack').populate('answers').populate('parent').populate('parent_answer').sort({ date: 1 });
@@ -123,4 +126,54 @@ router.get("/getQALogs/:user", (req, res) => {
     });
 })
 
+router.post("/createInitialQuestion", async (req, res) => {
+  let answerIDs = [];
+  for (let i = 0; i < req.body.answers.length; i++) {
+    let element = req.body.answers[i]
+    let newAnswer = new Answer({
+      answer: element.answer,
+      explaination: element.explaination,
+    })
+    await newAnswer.save();
+    answerIDs.push(newAnswer.id);
+  }
+  let newQuestion = new Question({
+    serial_number: 1,
+    question: req.body.question,
+    type: req.body.type,
+    answers: answerIDs,
+    isInitial: 1
+  });
+  await newQuestion.save();
+  res.json(await Question.find().populate('emotionpack').populate('answers').sort({ date: 1 }));
+});
+
+router.get("/getInitialQuestion", async (req, res) => {
+  const result = await Question.findOne({ isInitial: 1 }).populate('answers').sort({ date: 1 });
+  res.json(result);
+});
+
+router.post("/answerToInitialQuestion", async (req, res) => {
+  await new InitialQALog ({
+    user:         req.body.user,
+    question:     req.body.question,
+    answers:       req.body.answers
+  })
+  .save()
+  .then(result => {
+    res.json(result);
+  });
+});
+
+router.post("/answerToDescriptiveQuestion", auth, async (req, res) => {
+  await new DescriptiveQALog ({
+    user:         req.body.user,
+    question:     req.body.question,
+    answer:       req.body.answer
+  })
+  .save()
+  .then(result => {
+    res.status(200).send("Okay");
+  });
+})
 module.exports = router;

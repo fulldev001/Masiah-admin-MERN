@@ -8,16 +8,19 @@ import { apiUrl, filepath } from "../config"
 function ReviewUpdateModal(props) {
   const [status, setStatus] = React.useState(false)
   const [review, setReview] = React.useState("")
+  const [rating, setRating] = React.useState(0)
 
   React.useEffect(() => {
     setStatus(props.review.status)
     setReview(props.review.review)
+    setRating(props.review.rating)
   }, [props])
 
   const updateReview = async () => {
     let formData = {
       status: status,
       review: review,
+      rating: rating,
       _id: props.review._id
     }
     await api.post('/review/update', formData)
@@ -45,6 +48,20 @@ function ReviewUpdateModal(props) {
                 name="purpose"
                 value={review}
                 onChange={e => setReview(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col md="6">
+            <FormLabel><b>Rating</b></FormLabel>
+            <Form.Group>
+              <Form.Control
+                type="number"
+                min="0"
+                max="5"
+                placeholder="Input"
+                name="rating"
+                value={rating}
+                onChange={e => setRating(Number(e.target.value))}
               />
             </Form.Group>
           </Col>

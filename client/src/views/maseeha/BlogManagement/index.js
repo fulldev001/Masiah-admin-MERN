@@ -3,18 +3,19 @@ import { useEffect, useState } from 'react';
 import { Button, Card, Col, Container, Row, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PostEditModal from './PostEditModal';
-import { getAllPostsAct } from 'actions/blogActs';
+import { getAllPostsAct, deleteOneByIdAct } from 'actions/blogActs';
 import { filepath } from '../config';
-import { deleteOneByIdAct } from 'actions/blogActs';
+import { getAllAct } from 'actions/postCategoryActs';
 
 function BlogManagement(props) {
-  const { storePosts, getAllPostsAct, deleteOneByIdAct } = props;
+  const { storePosts, getAllPostsAct, deleteOneByIdAct, getAllAct } = props;
   const [modalFlag, setModalFlag] = useState(0);
   const [visiblePostEditModal, setVisiblePostEditModal] = useState(false);
   const [visibleConfirmDeleteModal, setVisibleConfirmDeleteModal] = useState(false);
   const [postId, setPostId] = useState("");
 
   useEffect(() => {
+    getAllAct();
     getAllPostsAct();
   }, []);
 
@@ -70,13 +71,13 @@ function BlogManagement(props) {
                             <td>{i + 1}</td>
                             <td>{post.title}</td>
                             <td>
-                              <img
+                              {post.image ? <img
                                 src={filepath + post.image}
                                 height="50px"
                                 width="80px"
-                              />
+                              /> : ""}
                             </td>
-                            <td>{post.categories[0] + ' ...'}</td>
+                            <td>{post.parent.name}</td>
                             <td>{post.author.name}</td>
                             <td></td>
                             <td>{post.createdAt.split('T')[0]}</td>
@@ -120,10 +121,12 @@ function BlogManagement(props) {
 }
 
 const mapStateToProps = (state) => ({
-  storePosts: state.blog.posts
+  storePosts: state.blog.posts,
+  storePostCategories: state.postCategory.postCategories
 });
 
 export default connect(mapStateToProps, {
+  getAllAct,
   getAllPostsAct,
   deleteOneByIdAct
 })(BlogManagement);

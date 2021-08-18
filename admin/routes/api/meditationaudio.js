@@ -7,6 +7,9 @@ const fs = require('fs')
 const request = require('request')
 const { getAudioDurationInSeconds } = require('get-audio-duration')
 const MeditationAudio = require('../../models/Meditationaudio')
+const Review = require('../../models/Review');
+const MAudioBookmark = require('../../models/MAudioBookmark');
+const auth = require('../../middleware/auth')
 
 router.get('/', async (req, res) => {
   res.json(await MeditationAudio.find().sort({ date: 1 }))
@@ -145,5 +148,76 @@ router.post('/csv', async (req, res) => {
   await newMeditationAudio.save()
   res.json("ok")
 })
+
+router.get('/getForClients', (req, res) => {
+  MeditationAudio.find({ status: true })
+    .then(results => {
+      if(results.length > 0) {  
+        let resData = [];
+        for(let i = 0; i < results.length; i++) {
+          let mAudioItem = {};
+          mAudioItem._id = results[i]._id;
+          mAudioItem.title = results[i].name;
+          mAudioItem.thumbimage = results[i].thumbimage;
+          mAudioItem.tags = results[i].tags;
+          mAudioItem.featured = results[i].featured;
+          mAudioItem.author = results[i].author;
+          mAudioItem.averageRate = results[i].averageRate,
+          mAudioItem.duration = results[i].duration
+          resData.push(mAudioItem);
+        }
+        res.json(resData);
+      } else {
+        res.json({ message: 'There is no available message.' });
+      }
+    })
+});
+
+router.get('/getOneByIdForClients/:_id', auth, (req, res) => {
+  MeditationAudio.findById(req.params._id)
+    .then(async result => {
+      let mAudioItem = {};
+      let isBookmarked = false;
+      const reviews = await Review.find({ meditation_audio: req.params._id });
+      await MAudioBookmark.findOne({ user: req.user.id, mAudio: req.params._id }) ? isBookmarked = true : isBookmarked = false;
+      mAudioItem = {
+        _id:              req.params._id,
+        backgroundImage:  result.image,
+        audiofile:        result.audiofile,
+        composer:         result.author,
+        audioTitle:       result.name,
+        purpose:          result.prupose,
+        description:      result.description,
+        duration:         result.duration,
+        tags:             result.tags,
+        ratings:          result.ratings,
+        reviews:          reviews,
+        isBookmarked:     isBookmarked
+      };
+      res.json(mAudioItem);
+    })
+});
+
+//  Get the bookmarked meditation audios by userId
+router.get('/getBookmarked/:userId', (req, res) => {
+  MAudioBookmark.find({ user: req.params.userId })
+    .populate('mAudio')
+    .sort({ rank: -1, updatedAt: -1, createdAt: -1 })
+    .then(async results => {
+      const resData = [];
+      for(let i = 0; i < results.length; i += 1) {
+        let mAudioItem = {};
+        mAudioItem._id = results[i].mAudio._id;
+        mAudioItem.audiofile = results[i].mAudio.audiofile;
+        mAudioItem.image = results[i].mAudio.image;
+        mAudioItem.averageRate = results[i].mAudio.averageRate;
+        mAudioItem.author = results[i].mAudio.author;
+        mAudioItem.weight = results[i].rank;
+        mAudioItem.reviews = await Review.find({ meditation_audio: results[i].mAudio._id, status: true }, { _id: 0, review: 1 });
+        resData.push(mAudioItem);
+      }
+      res.json(resData);
+    })
+});
 
 module.exports = router

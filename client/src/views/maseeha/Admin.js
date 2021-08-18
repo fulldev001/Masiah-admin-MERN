@@ -25,6 +25,10 @@ import OurTeamManagement from './OurTeamManagement';
 import ContactInfoManagement from './ContactInfoManagement';
 import ServiceManagement from './ServiceManagement';
 import HealthyLifeManagement from './HealthyLifeManagement';
+import LogoManagement from './LogoManagement';
+import SiteTitleManagement from './SiteTitleManagement';
+import FooterContentManagement from './FooterContentManagement';
+import PostCategoryManagement from './PostCategoryManagement';
 
 const Admin = (props) => {
   const [image, setImage] = React.useState(sidebarImage);
@@ -53,11 +57,15 @@ const Admin = (props) => {
               <PrivateRoute exact path="/admin/splash" component={SplashManagement} />
               <PrivateRoute exact path="/admin/review" component={ReviewManagement} />
               <PrivateRoute exact path="/admin/profile" component={UserProfile} />
-              <PrivateRoute exact path="/admin/blog" component={BlogManagement} />
-              <PrivateRoute exact path="/admin/ourTeam" component={OurTeamManagement} />
-              <PrivateRoute exact path="/admin/contactInfo" component={ContactInfoManagement} />
-              <PrivateRoute exact path="/admin/service" component={ServiceManagement} />
-              <PrivateRoute exact path="/admin/healthyLife" component={HealthyLifeManagement} />
+              <PrivateRoute exact path="/admin/frontendContents/blog" component={BlogManagement} />
+              <PrivateRoute exact path="/admin/frontendContents/ourTeam" component={OurTeamManagement} />
+              <PrivateRoute exact path="/admin/frontendContents/contactInfo" component={ContactInfoManagement} />
+              <PrivateRoute exact path="/admin/frontendContents/service" component={ServiceManagement} />
+              <PrivateRoute exact path="/admin/frontendContents/healthyLife" component={HealthyLifeManagement} />
+              <PrivateRoute exact path="/admin/frontendContents/logo" component={LogoManagement} />
+              <PrivateRoute exact path="/admin/frontendContents/siteTitle" component={SiteTitleManagement} />
+              <PrivateRoute exact path="/admin/frontendContents/footerContent" component={FooterContentManagement} />
+              <PrivateRoute exact path="/admin/frontendContents/postCategory" component={PostCategoryManagement} />
             </div>
             <Footer />
           </div>

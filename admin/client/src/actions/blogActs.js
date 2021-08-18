@@ -46,7 +46,6 @@ export const updatePostByIdAct = (postId, data) => (dispatch) => {
 };
 
 export const deleteOneByIdAct = postId => dispatch => {
-  console.log(postId);
   api.delete(`/posts/deleteOneById/${postId}`)
     .then(res => {
       dispatch({

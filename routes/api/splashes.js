@@ -63,4 +63,12 @@ router.delete('/:id', async (req, res) => {
   res.json("ok");
 })
 
+//  Get the splash video by week
+router.get('/getByWeek/:week', (req, res) => {
+  Splash.findOne({ week: req.params.week })
+    then(result => {
+      res.json(result);
+    })
+})
+
 module.exports = router;

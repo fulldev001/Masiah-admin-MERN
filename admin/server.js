@@ -24,6 +24,7 @@ app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
+app.use('/api/postCategory', require('./routes/api/postCategories'));
 app.use('/api/emotion_packs', require('./routes/api/emotionpacks'));
 app.use('/api/questions', require('./routes/api/questions'));
 app.use('/api/emotionaudio', require('./routes/api/emotionaudio'));
@@ -38,6 +39,9 @@ app.use('/api/newsletters', require('./routes/api/newsletters'));
 app.use('/api/contactInfos', require('./routes/api/contactInfos'));
 app.use('/api/services', require('./routes/api/services'));
 app.use('/api/healthyLifes', require('./routes/api/healthyLifes'));
+app.use('/api/logo', require('./routes/api/logos'));
+app.use('/api/siteTitle', require('./routes/api/siteTitles'));
+app.use('/api/footerContent', require('./routes/api/footerContents'));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

@@ -12,6 +12,10 @@ import OurTeamManagement from "views/maseeha/OurTeamManagement"
 import ContactInfoManagement from "views/maseeha/ContactInfoManagement"
 import ServiceManagement from "views/maseeha/ServiceManagement"
 import HealthyLifeManagement from "views/maseeha/HealthyLifeManagement"
+import LogoManagement from "views/maseeha/LogoManagement"
+import SiteTitleManagement from "views/maseeha/SiteTitleManagement"
+import FooterContentManagement from "views/maseeha/FooterContentManagement"
+import PostCategoryManagement from "views/maseeha/PostCategoryManagement"
 // import Journals from "views/maseeha/Journals"
 
 const dashboardRoutes = [
@@ -78,41 +82,83 @@ const dashboardRoutes = [
     component: UserProfile,
     layout: "/admin",
   },
+  // {
+  //   path: "/content",
+  //   name: "Mange Content",
+  //   icon: "nc-icon nc-circle-09",
+  //   children: [
+  //     {
+  //       path: "/content/blog",
+  //       name: "Blog Mangement",
+  //       icon: "nc-icon nc-notes",
+  //       component: BlogManagement,
+  //       layout: "/admin"
+  //     },
+  //   ]
+  // },
   {
-    path: "/blog",
+    path: "/frontendContents/blog",
     name: "Blog Mangement",
     icon: "nc-icon nc-notes",
     component: BlogManagement,
     layout: "/admin"
   },
   {
-    path: "/ourTeam",
+    path: "/frontendContents/postCategory",
+    name: "Post Category Mangement",
+    icon: "",
+    component: PostCategoryManagement,
+    layout: "/admin"
+  },
+  {
+    path: "/frontendContents/ourTeam",
     name: "Our Team Mangement",
     icon: "nc-icon nc-group",
     component: OurTeamManagement,
     layout: "/admin"
   },
   {
-    path: "/contactInfo",
+    path: "/frontendContents/contactInfo",
     name: "Contact Info Mangement",
     icon: "nc-icon nc-group",
     component: ContactInfoManagement,
     layout: "/admin"
   },
   {
-    path: "/service",
+    path: "/frontendContents/service",
     name: "Our Services Mangement",
     icon: "nc-icon nc-group",
     component: ServiceManagement,
     layout: "/admin"
   },
   {
-    path: "/healthyLife",
+    path: "/frontendContents/healthyLife",
     name: "Healthy Lifes Mangement",
     icon: "nc-icon nc-group",
     component: HealthyLifeManagement,
     layout: "/admin"
-  }
+  },
+  {
+    path: "/frontendContents/logo",
+    name: "Logo Mangement",
+    icon: "nc-icon nc-group",
+    component: LogoManagement,
+    layout: "/admin"
+  },
+  {
+    path: "/frontendContents/siteTitle",
+    name: "Site Title Mangement",
+    icon: "nc-icon nc-group",
+    component: SiteTitleManagement,
+    layout: "/admin"
+  },
+  {
+    path: "/frontendContents/footerContent",
+    name: "Footer Content Mangement",
+    icon: "nc-icon nc-group",
+    component: FooterContentManagement,
+    layout: "/admin"
+  },
   // {
   //   path: "/journals",
   //   name: "Journals",

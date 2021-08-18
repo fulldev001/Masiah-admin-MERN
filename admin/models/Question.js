@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { FALSE } = require('node-sass');
 
 const QuestionSchema = new mongoose.Schema({
   serial_number: {
@@ -31,6 +32,10 @@ const QuestionSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  isInitial: {
+    type: Number,
+    default: 0
   }
 });
 

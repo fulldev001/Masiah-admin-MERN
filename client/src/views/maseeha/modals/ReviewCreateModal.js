@@ -10,10 +10,11 @@ function ReviewCreateModal(props) {
   const [meditation_audio, setMeditationAudio] = React.useState("")
   const [review, setReview] = React.useState("")
   const [status, setStatus] = React.useState(false)
+  const [rating, setRating] = React.useState(0)
 
   const addNewReview = async () => {
     if (user && meditation_audio && review) {
-      let sendData = { user, meditation_audio, review, status }
+      let sendData = { user, meditation_audio, review, rating, status }
       await api.post('/review/add', sendData)
     } else {
       alert("Please check the inputs below.")
@@ -25,6 +26,7 @@ function ReviewCreateModal(props) {
     setUser("")
     setMeditationAudio("")
     setReview("")
+    setRating(0)
     setStatus(false)
     props.setShowModalCreate(false)
   }
@@ -80,6 +82,20 @@ function ReviewCreateModal(props) {
                 name="purpose"
                 value={review}
                 onChange={e => setReview(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col md="6">
+            <FormLabel><b>Rating</b></FormLabel>
+            <Form.Group>
+              <Form.Control
+                type="number"
+                min="0"
+                max="5"
+                placeholder="Input"
+                name="rating"
+                value={rating}
+                onChange={e => setRating(Number(e.target.value))}
               />
             </Form.Group>
           </Col>
